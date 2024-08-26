@@ -18,6 +18,11 @@ create-project:
 	docker compose exec app php artisan key:generate
 	docker compose exec app php artisan storage:link
 	docker compose exec app chmod -R 777 storage bootstrap/cache
+	docker compose exec app composer require filament/filament:"^3.2" -W
+	docker compose exec app php artisan filament:install --panels
+	docker compose exec app composer require firefly/filament-blog
+	docker compose exec app php artisan filament-blog:install
+	open http://localhost/admin/login/
 	@make fresh
 build:
 	docker compose build
